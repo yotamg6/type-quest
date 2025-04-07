@@ -3,10 +3,11 @@ import actionListener from "../utils/MyActionListener";
 import {
   BACKSPACE,
   CLEAR,
-  KEYBOARD,
+  KEYBOARD_ROWS,
   KEYPRESS,
   SUBMIT,
 } from "../utils/constants";
+import BackspaceIcon from "@mui/icons-material/Backspace";
 
 const Keyboard = () => {
   const handleKeyPress = (letter: string) => {
@@ -29,29 +30,38 @@ const Keyboard = () => {
     <Box
       sx={{
         display: "flex",
-        flexWrap: "wrap",
+        flexDirection: "column",
         gap: 1,
-        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      {KEYBOARD.map((letter) => (
-        <Button
-          key={letter}
-          variant="contained"
-          onClick={() => handleKeyPress(letter)}
-        >
-          {letter}
-        </Button>
+      {KEYBOARD_ROWS.map((row, rowIndex) => (
+        <Box key={rowIndex} sx={{ display: "flex", gap: 1 }}>
+          {row.map((letter) => (
+            <Button
+              key={letter}
+              variant="contained"
+              onClick={() => handleKeyPress(letter)}
+              sx={{ minWidth: 40 }}
+            >
+              {letter}
+            </Button>
+          ))}
+        </Box>
       ))}
-      <Button variant="outlined" onClick={handleBackspace}>
-        Backspace
-      </Button>
-      <Button variant="outlined" onClick={handleSubmit}>
-        Enter
-      </Button>
-      <Button variant="outlined" color="error" onClick={handleClear}>
-        Clear
-      </Button>
+      <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
+        <Button
+          variant="outlined"
+          startIcon={<BackspaceIcon />}
+          onClick={handleBackspace}
+        ></Button>
+        <Button variant="outlined" onClick={handleSubmit}>
+          Enter
+        </Button>
+        <Button variant="outlined" color="error" onClick={handleClear}>
+          Clear
+        </Button>
+      </Box>
     </Box>
   );
 };
